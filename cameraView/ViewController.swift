@@ -148,6 +148,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, AVCaptu
         }
     }
     
+    var saveImage : UIImage?
     func captureOutput(captureOutput: AVCaptureOutput!, didOutputSampleBuffer sampleBuffer: CMSampleBuffer!, fromConnection connection: AVCaptureConnection!)
     {
         let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer)
@@ -165,7 +166,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, AVCaptu
         print("capture output test1")
         
         let image = imageFromSampleBuffer(sampleBuffer)
-
+        saveImage = image
         print("return is image=",image)
         //preview 사이즈는 320, 568이다. 그러나 이미지의 사이즈는 852,640이다.
         //왜 이미지의 사이즈가 커진 것인가?
@@ -175,9 +176,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, AVCaptu
         
         //-> AVcapture옵션을 변경하니 바뀌었다. 640x480
     
-        let scalePixelPoint = CGPoint(x: 320, y: 476)
-//        let gotUIColorValue :UIColor = getPixelColor(image,pos: scalePixelPoint)
-//        let gotUIColorValue2 = colorForPixel(image,x: 320,y: 476)
         let gotUIColorValue2 = colorForPixel(image,x: 320,y: 240)
         
         print("rgbaLabel",gotUIColorValue2)
@@ -194,71 +192,19 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, AVCaptu
     
     @IBAction func cameraStillButton(sender: AnyObject) {
         if self.status == .Preview {
-//            UIView.animateWithDuration(0.225, animations: { () -> Void in
+            UIView.animateWithDuration(0.225, animations: { () -> Void in
                 self.previewView.alpha = 0.0;
-//            })
+                self.stillImageView.alpha = 1.0;
+            })
+            print("catureImage test image=",saveImage)
+            print("###################################################")
+            print("in if image")
             
-            captureStillImage({ (image) -> Void in
-                print("catureImage test image=",image)
-                if image != nil {
-                    print("###################################################")
-                    print("in if image")
-                    self.stillImageView.image = image;
+            self.stillImageView.image = saveImage;
                     
-//                    UIView.animateWithDuration(0.225, animations: { () -> Void in
-                        self.stillImageView.layer.zPosition = 1.0
-                        self.stillImageView.alpha = 1.0;
-                        
-//                    })
-                    self.status = .Still
-                }
-            })
+            self.status = .Still
         }
     }
-    
-    func captureStillImage(completed: (image: UIImage?) -> Void) {
-        if let imageOutput = self.stillImageOutput {
-            dispatch_async(self.cameraQueue!, { () -> Void in
-                print("test1")
-                var videoConnection: AVCaptureConnection?
-                for connection in imageOutput.connections {
-                    print("test2")
-                    let c = connection as! AVCaptureConnection
-                    print("test3 c=",c)
-                    for port in c.inputPorts {
-                        print("test4 c=",c)
-                        let p = port as! AVCaptureInputPort
-                        if p.mediaType == AVMediaTypeVideo {
-                            videoConnection = c;
-                            break
-                        }
-                    }
-                    print("test5 videoConnection=",videoConnection)
-                    if videoConnection != nil {
-                        break
-                    }
-                }
-                
-                if videoConnection != nil {
-                    imageOutput.captureStillImageAsynchronouslyFromConnection(videoConnection, completionHandler: { (imageSampleBuffer: CMSampleBufferRef!, error) -> Void in
-                        let imageData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(imageSampleBuffer)
-                        let image: UIImage? = UIImage(data: imageData!)!
-                        
-                        dispatch_async(dispatch_get_main_queue()) {
-                            completed(image: image)
-                        }
-                    })
-                } else {
-                    dispatch_async(dispatch_get_main_queue()) {
-                        completed(image: nil)
-                    }
-                }
-            })
-        } else {
-            completed(image: nil)
-        }
-    }
-
     
     func addStillImageOutput() {
         stillImageOutput = AVCaptureStillImageOutput()

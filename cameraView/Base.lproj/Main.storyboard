@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -20,19 +20,50 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qym-Ia-hEy">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <subviews>
-                                    <view clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="colorView" translatesAutoresizingMaskIntoConstraints="NO" id="jXd-ij-m3w">
-                                        <rect key="frame" x="472" y="465" width="100" height="100"/>
-                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="hbp-k2-zRk">
+                                        <rect key="frame" x="465" y="458" width="100" height="100"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="100" id="JhO-JN-KWJ"/>
-                                            <constraint firstAttribute="width" constant="100" id="Wk5-xB-IH4"/>
+                                            <constraint firstAttribute="width" constant="100" id="73c-ty-vbx"/>
+                                            <constraint firstAttribute="height" constant="100" id="Rhk-or-l4b"/>
                                         </constraints>
-                                    </view>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cxu-wv-cnK">
+                                        <rect key="frame" x="474" y="526" width="75" height="21"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="75" id="0NM-rK-r6L"/>
+                                            <constraint firstAttribute="height" constant="21" id="iHQ-Ec-qfr"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Zjc-pt-1k9">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                    </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jaA-ro-3Lj">
+                                        <rect key="frame" x="265" y="473" width="70" height="70"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="70" id="hc9-dM-8p9"/>
+                                        </constraints>
+                                        <state key="normal" image="cameraBT"/>
+                                        <connections>
+                                            <action selector="cameraStillButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="1fg-4m-rw2"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="jXd-ij-m3w" secondAttribute="bottom" constant="35" id="Gj6-0u-Uts"/>
-                                    <constraint firstAttribute="trailing" secondItem="jXd-ij-m3w" secondAttribute="trailing" constant="28" id="h7U-Vi-3CS"/>
+                                    <constraint firstAttribute="trailing" secondItem="Cxu-wv-cnK" secondAttribute="trailing" constant="51" id="0D6-a6-FVm"/>
+                                    <constraint firstItem="Zjc-pt-1k9" firstAttribute="top" secondItem="qym-Ia-hEy" secondAttribute="top" id="0In-b7-t5A"/>
+                                    <constraint firstItem="Zjc-pt-1k9" firstAttribute="leading" secondItem="qym-Ia-hEy" secondAttribute="leading" id="23h-tv-QLi"/>
+                                    <constraint firstAttribute="trailing" secondItem="hbp-k2-zRk" secondAttribute="trailing" constant="35" id="8Mu-Xs-7Xv"/>
+                                    <constraint firstAttribute="bottom" secondItem="hbp-k2-zRk" secondAttribute="bottom" constant="42" id="FyH-Bi-jMd"/>
+                                    <constraint firstAttribute="bottom" secondItem="Zjc-pt-1k9" secondAttribute="bottom" id="Tpr-mq-IYq"/>
+                                    <constraint firstAttribute="bottom" secondItem="jaA-ro-3Lj" secondAttribute="bottom" constant="57" id="VXk-UA-2hG"/>
+                                    <constraint firstItem="jaA-ro-3Lj" firstAttribute="centerX" secondItem="Zjc-pt-1k9" secondAttribute="centerX" id="cOi-fB-dVG"/>
+                                    <constraint firstAttribute="trailing" secondItem="Zjc-pt-1k9" secondAttribute="trailing" id="e3t-R3-Mrr"/>
+                                    <constraint firstItem="jaA-ro-3Lj" firstAttribute="centerY" secondItem="hbp-k2-zRk" secondAttribute="centerY" id="tOW-AN-ah5"/>
+                                    <constraint firstAttribute="bottom" secondItem="Cxu-wv-cnK" secondAttribute="bottom" constant="53" id="zer-a6-uJm"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -46,8 +77,11 @@
                     </view>
                     <navigationItem key="navigationItem" id="Dr4-0v-frt"/>
                     <connections>
-                        <outlet property="previewSmallView" destination="jXd-ij-m3w" id="74m-oR-UFf"/>
+                        <outlet property="imageView" destination="hbp-k2-zRk" id="NoH-g5-Xsj"/>
                         <outlet property="previewView" destination="qym-Ia-hEy" id="df7-d3-dJ1"/>
+                        <outlet property="rgbaLabel" destination="Cxu-wv-cnK" id="2Au-gc-ElM"/>
+                        <outlet property="stillImageView" destination="Zjc-pt-1k9" id="eo3-TS-uRZ"/>
+                        <outlet property="stilllButton" destination="jaA-ro-3Lj" id="E7y-hz-ujn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -55,4 +89,7 @@
             <point key="canvasLocation" x="1057" y="314"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="cameraBT" width="512" height="512"/>
+    </resources>
 </document>

@@ -36,26 +36,59 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, AVCaptu
     //이미지 캡처를 위해 객체 생성
     var stillImageOutput: AVCaptureStillImageOutput?
     
-    @IBOutlet weak var rgbaLabel: UILabel!
+    
+    @IBOutlet weak var redLabel: UILabel!
+    @IBOutlet weak var greenLabel: UILabel!
+    @IBOutlet weak var blueLabel: UILabel!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var stillImageView: UIImageView!
     
     @IBOutlet weak var stilllButton: UIButton!
     
-    //카메라의 현재 상태를 알기 위해, status 변수 사용.
+    @IBOutlet weak var stillCancelButton: UIButton!
+    @IBOutlet weak var stillSaveButton: UIButton!
+        //카메라의 현재 상태를 알기 위해, status 변수 사용.
     var status: currentStatus = .Preview
     
+    @IBAction func stillCancelFunc(sender: AnyObject) {
+        if self.status == .Still {
+            UIView.animateWithDuration(0.225, animations: { () -> Void in
+              self.setAlphaValue(false)
+            })
+            self.stillImageView.image = nil
+            self.status = .Preview
+        }
+    }
+
+    @IBAction func stillSaveFunc(sender: AnyObject) {
+    }
+    
+
+    
+    func setAlphaValue(isStill:Bool) {
+        if (isStill) {
+            self.previewView.alpha = 0.0
+            self.stillImageView.alpha = 1.0
+            self.stillSaveButton.alpha = 1.0
+            self.stillCancelButton.alpha = 1.0
+        } else {
+            self.previewView.alpha = 1.0
+            self.stillImageView.alpha = 0.0
+            self.stillSaveButton.alpha = 0.0
+            self.stillCancelButton.alpha = 0.0
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         //  z포지션을 주어 imageView 레이어의 포지션을 위로 변경.
         self.imageView.layer.zPosition = 1.0
-//                    addSubview(pointImageView)
-        self.stillImageView.alpha = 0.0
-        self.previewView.alpha = 1.0
         self.stilllButton.layer.zPosition = 1.0
-        
+        self.greenLabel.layer.zPosition = 1.0
+        self.blueLabel.layer.zPosition = 1.0
+        self.redLabel.layer.zPosition = 1.0
+        setAlphaValue(false)
     }
     
     //시점으로 인해, viewDidAppear함수에서 addPreviewLayer함수를 호출.
@@ -193,13 +226,14 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, AVCaptu
     @IBAction func cameraStillButton(sender: AnyObject) {
         if self.status == .Preview {
             UIView.animateWithDuration(0.225, animations: { () -> Void in
-                self.previewView.alpha = 0.0;
-                self.stillImageView.alpha = 1.0;
+                self.setAlphaValue(true)
             })
             print("catureImage test image=",saveImage)
             print("###################################################")
             print("in if image")
             
+            //[Q]buffer에 있던 이미지가 방향이 돌아가 있다.
+            //원래 그런 것인가..? 수동으로 돌려주어야 하는 것인가..?
             self.stillImageView.image = saveImage;
                     
             self.status = .Still
@@ -259,12 +293,17 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, AVCaptu
 //        let pixelValue = data + ((imageWidth * y) + x) * bytesPerPixel
         
         // kCVPixelFormatType_32BGRA
-        let blue  = CGFloat(pixelValue[0])
-        let green = CGFloat(pixelValue[1])
-        let red   = CGFloat(pixelValue[2])
-        let alpha = CGFloat(pixelValue[3])
+        let blue  = CGFloat(pixelValue[0]) / 255
+        blueLabel.text = String(blue)
+        let green = CGFloat(pixelValue[1]) / 255
+        greenLabel.text = "g : " + String(blue)
+        let red   = CGFloat(pixelValue[2]) / 255
+        redLabel.text = "r : " + String(blue)
+        let alpha = CGFloat(pixelValue[3]) / 255
         
-        return UIColor(red: red / 255, green: green / 255, blue: blue / 255, alpha: alpha / 255)
+        //위 시점에서 라벨에 컬러값을 스트링으로 주려고 했는데, 나타나지 않는다.
+        
+        return UIColor(red: red, green: green, blue: blue, alpha: alpha)
     }
 
     /* 수석님 함수 */
